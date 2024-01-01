@@ -19,9 +19,9 @@ public class PlayerMovement : MonoBehaviour
         float verticalInput = Input.GetAxis("Mouse Y");
         currentEulerAngles += new Vector3(verticalInput * -1, horizontalInput, 0) * Time.deltaTime * sensivity;
         Camera.transform.eulerAngles = currentEulerAngles;
-        Debug.Log(Camera.transform.rotation);
         
-        
-        
+        if(Input.GetKey(KeyCode.Mouse0)) {
+            Debug.Log("Shoot");
+        }
     }
 }
