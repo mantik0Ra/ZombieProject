@@ -12,7 +12,8 @@ public class PlayerMovement : MonoBehaviour
 
     ParticleSystem particleSystem;
 
-    bool CanShoot = false;
+    bool IsShoot = false;
+    bool IsCooldown = false;
 
     float horizontalInput;
     float verticalInput;
@@ -35,8 +36,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if(CanShoot) {
+        if(IsShoot && !IsCooldown) {
             Shoot();
+            StartCoroutine(Coroutine());
         }
 
         Debug.DrawRay(Camera.transform.position, Camera.transform.TransformDirection(Vector3.forward) * 100f, Color.blue);
@@ -46,25 +48,29 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(.4f);
         audioPlayer.Stop();
-        CanShoot = false;
+        IsShoot = false;
+        IsCooldown = false;
+
     }
 
     void Shoot() {
+        IsCooldown = true;
         RaycastHit hit;
         Physics.Raycast(Camera.transform.position, Camera.transform.TransformDirection(Vector3.forward), out hit, 100f);
 
         if (hit.collider is not null && hit.collider.tag == "Zombie") {
-            Debug.Log("Hit zombie");
+            ZombieController.Hp -= 25f;
+            Debug.Log(ZombieController.Hp < 0 ? "Dead" : "Alive");
+            
         }
     }
 
     void PressButtonToShot() {
-        if (Input.GetKey(KeyCode.Mouse0) && !CanShoot) {
+        if (Input.GetKey(KeyCode.Mouse0) && !IsShoot) {
             particleSystem.Play();
             audioPlayer.Play();
             RotateDrum();
-            CanShoot = true;
-            StartCoroutine(Coroutine());
+            IsShoot = true;
         }
     }
 
