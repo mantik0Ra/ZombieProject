@@ -7,9 +7,12 @@ public class PlayerMovement : MonoBehaviour
     public float sensivity = 50f;
     private GameObject Camera;
     Vector3 currentEulerAngles;
+
+    ParticleSystem particleSystem;
     void Start()
     {
         Camera = GameObject.Find("Camera");
+        particleSystem = GameObject.Find("WFX_Explosion Small").GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -21,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
         Camera.transform.eulerAngles = currentEulerAngles;
         
         if(Input.GetKey(KeyCode.Mouse0)) {
-            Debug.Log("Shoot");
+            particleSystem.Play();
         }
     }
 }
