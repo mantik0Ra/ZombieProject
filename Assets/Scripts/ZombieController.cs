@@ -9,6 +9,9 @@ public class ZombieController : MonoBehaviour {
         set { hp = value; }
     }
 
+    public float speed = 1f;
+    private bool IsAttack = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +22,14 @@ public class ZombieController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        
+        if(!IsAttack) {
+            transform.Translate(new Vector3(transform.position.x, 0, transform.position.z) * Time.deltaTime * 1f);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if(other.gameObject.tag == "Player") {
+            IsAttack = true;
+        }
     }
 }
