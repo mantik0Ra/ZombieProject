@@ -23,7 +23,7 @@ public class ZombieController : MonoBehaviour {
     void Update()
     {
         if(!IsAttack) {
-            transform.Translate(new Vector3(transform.position.x, 0, transform.position.z) * Time.deltaTime * 1f);
+            transform.Translate(new Vector3(transform.position.x, 0, transform.position.z) * Time.deltaTime * speed);
         }
     }
 
