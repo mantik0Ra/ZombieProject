@@ -13,6 +13,7 @@ public class ZombieController : MonoBehaviour {
     private bool IsAttack = false;
     private GameObject Player;
     private Animator Animator;
+    bool isAttackCooldown = false;
 
 
     // Start is called before the first frame update
@@ -31,7 +32,11 @@ public class ZombieController : MonoBehaviour {
             // transform.position = new Vector3(transform.position.x, 0, transform.position.z) + (delta * speed * Time.deltaTime);
             transform.position += (delta * speed * Time.deltaTime);
             transform.forward = delta;
-            
+        }
+        if(IsAttack && !isAttackCooldown) {
+            isAttackCooldown = true;
+            StartCoroutine(Coroutine());
+
         }
 
     }
@@ -42,5 +47,12 @@ public class ZombieController : MonoBehaviour {
             Animator.SetBool("IsAttack", true);
             
         }
+    }
+
+    private IEnumerator Coroutine() {
+        yield return new WaitForSeconds(1f);
+        PlayerMovement.Hp -= 5f;
+        isAttackCooldown = false;
+        Debug.Log(PlayerMovement.Hp);
     }
 }

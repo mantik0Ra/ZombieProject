@@ -20,6 +20,12 @@ public class PlayerMovement : MonoBehaviour
 
     AudioSource audioPlayer;
     GameObject Drum;
+
+    private static float hp = 100f;
+    public static float Hp {
+        get { return hp; }
+        set { hp = value; }
+    }
     void Start()
     {
         Camera = GameObject.Find("Camera");
