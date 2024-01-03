@@ -12,12 +12,14 @@ public class ZombieController : MonoBehaviour {
     public float speed = 1f;
     private bool IsAttack = false;
     private GameObject Player;
+    private Animator Animator;
 
 
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.Find("Player");
+        Animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -29,9 +31,7 @@ public class ZombieController : MonoBehaviour {
             // transform.position = new Vector3(transform.position.x, 0, transform.position.z) + (delta * speed * Time.deltaTime);
             transform.position += (delta * speed * Time.deltaTime);
             transform.forward = delta;
-            Debug.Log(delta);
             
-
         }
 
     }
@@ -39,6 +39,8 @@ public class ZombieController : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.tag == "Player") {
             IsAttack = true;
+            Animator.SetBool("IsAttack", true);
+            
         }
     }
 }
