@@ -90,4 +90,9 @@ public class PlayerMovement : MonoBehaviour
     void RotateDrum() {
         Drum.transform.eulerAngles += new Vector3(0, 0, 60);
     }
+
+    public static void PlayerTakeDamage(int valueDamage) {
+        Hp -= valueDamage;
+        HealthBar.ReduceHpInHealthBar(valueDamage);
+    }
 }
