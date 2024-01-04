@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ZombieController : MonoBehaviour {
@@ -11,11 +12,12 @@ public class ZombieController : MonoBehaviour {
     }
 
     public float speed = 1f;
-    private bool IsAttack = false;
+    private bool isAttack = false;
     private bool isAttackCooldown = false;
+    private static bool isDead = false;
 
     private GameObject Player;
-    private Animator Animator;
+    private static Animator Animator;
 
 
 
@@ -29,30 +31,51 @@ public class ZombieController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (!IsAttack) {
-            Vector3 delta = Player.transform.position - transform.position;
-            delta.Normalize();
-            // transform.position = new Vector3(transform.position.x, 0, transform.position.z) + (delta * speed * Time.deltaTime);
-            transform.position += (delta * speed * Time.deltaTime);
-            transform.forward = delta;
+        if(!isDead) {
+            if (!isAttack) {
+                Vector3 delta = Player.transform.position - transform.position;
+                delta.Normalize();
+                // transform.position = new Vector3(transform.position.x, 0, transform.position.z) + (delta * speed * Time.deltaTime);
+                transform.position += (delta * speed * Time.deltaTime);
+                transform.forward = delta;
+            }
+            if (isAttack && !isAttackCooldown) {
+                isAttackCooldown = true;
+                PlayerMovement.PlayerTakeDamage(5);
+                StartCoroutine(CooldownAttack());
+            }
+        } else {
+            StartCoroutine(RemoveBodyAfterDead());
         }
-        if (IsAttack && !isAttackCooldown) {
-            isAttackCooldown = true;
-            PlayerMovement.PlayerTakeDamage(5);
-            StartCoroutine(Coroutine());
-        }
+        
     }
 
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.tag == "Player") {
-            IsAttack = true;
+            isAttack = true;
             Animator.SetBool("IsAttack", true);
             
         }
     }
 
-    private IEnumerator Coroutine() {
+    private IEnumerator CooldownAttack() {
         yield return new WaitForSeconds(1f);
         isAttackCooldown = false;
     }
+
+    public static void ZombieTakeDamage(float damage) {
+        Hp -= damage;
+
+        if(Hp <= 0) {
+            Animator.SetBool("IsDead", true);
+            isDead = true;
+        }
+    }
+
+    private IEnumerator RemoveBodyAfterDead() {
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
+    }
+
+    
 }

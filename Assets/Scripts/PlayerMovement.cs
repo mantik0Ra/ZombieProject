@@ -65,9 +65,7 @@ public class PlayerMovement : MonoBehaviour
         Physics.Raycast(Camera.transform.position, Camera.transform.TransformDirection(Vector3.forward), out hit, 100f);
 
         if (hit.collider is not null && hit.collider.tag == "Zombie") {
-            ZombieController.Hp -= 25f;
-            Debug.Log(ZombieController.Hp < 0 ? "Dead" : "Alive");
-            
+            ZombieController.ZombieTakeDamage(25f);
         }
     }
 
