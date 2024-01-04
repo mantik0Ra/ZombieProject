@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,7 +36,10 @@ public class ZombieController : MonoBehaviour {
         }
         if(IsAttack && !isAttackCooldown) {
             isAttackCooldown = true;
+            PlayerMovement.Hp -= 5f;
+            HealthBar.ReduceHpInHealthBar(5);
             StartCoroutine(Coroutine());
+        
 
         }
 
@@ -51,8 +55,6 @@ public class ZombieController : MonoBehaviour {
 
     private IEnumerator Coroutine() {
         yield return new WaitForSeconds(1f);
-        PlayerMovement.Hp -= 5f;
         isAttackCooldown = false;
-        Debug.Log(PlayerMovement.Hp);
     }
 }
