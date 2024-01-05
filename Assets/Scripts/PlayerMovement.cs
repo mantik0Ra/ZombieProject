@@ -12,8 +12,9 @@ public class PlayerMovement : MonoBehaviour
 
     ParticleSystem particleSystem;
 
-    bool IsShoot = false;
-    bool IsCooldown = false;
+    bool isShoot = false;
+    bool isCooldown = false;
+    bool isDead = false;
 
     float horizontalInput;
     float verticalInput;
@@ -44,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if(IsShoot && !IsCooldown) {
+        if(isShoot && !isCooldown) {
             Shoot();
             StartCoroutine(Coroutine());
         }
@@ -56,13 +57,13 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(.4f);
         audioPlayer.Stop();
-        IsShoot = false;
-        IsCooldown = false;
+        isShoot = false;
+        isCooldown = false;
 
     }
 
     void Shoot() {
-        IsCooldown = true;
+        isCooldown = true;
         RaycastHit hit;
         Physics.Raycast(Camera.transform.position, Camera.transform.TransformDirection(Vector3.forward), out hit, 100f);
 
@@ -74,11 +75,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void PressButtonToShot() {
-        if (Input.GetKey(KeyCode.Mouse0) && !IsShoot) {
+        if (Input.GetKey(KeyCode.Mouse0) && !isShoot) {
             particleSystem.Play();
             audioPlayer.Play();
             RotateDrum();
-            IsShoot = true;
+            isShoot = true;
         }
     }
 
