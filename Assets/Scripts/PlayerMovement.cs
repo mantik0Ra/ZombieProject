@@ -40,8 +40,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CameraMovement();
-        PressButtonToShot();
+        if(!isDead) {
+            CameraMovement();
+            PressButtonToShot();
+        }
     }
 
     private void FixedUpdate() {
@@ -94,9 +96,17 @@ public class PlayerMovement : MonoBehaviour
         Drum.transform.eulerAngles += new Vector3(0, 0, 60);
     }
 
-    public static void PlayerTakeDamage(int valueDamage) {
+    public void PlayerTakeDamage(int valueDamage) {
         Hp -= valueDamage;
         HealthBar.ReduceHpInHealthBar(valueDamage);
+        if(!IsAlive()) {
+            isDead = true;
+        }
+    }
+
+    private bool IsAlive() {
+        if (Hp <= 0) return false;
+        return true;
     }
 
     private void CoinsCounter(ZombieController zombie) {

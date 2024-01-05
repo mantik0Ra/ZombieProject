@@ -21,6 +21,7 @@ public class ZombieController : MonoBehaviour {
     private GameObject Player;
     private  Animator Animator;
     private GameController gameController;
+    private PlayerMovement playerController;
 
 
 
@@ -29,6 +30,7 @@ public class ZombieController : MonoBehaviour {
     {
         Player = GameObject.Find("Player");
         Animator = GetComponent<Animator>();
+        playerController = Player.GetComponent<PlayerMovement>();
         
     }
 
@@ -45,7 +47,7 @@ public class ZombieController : MonoBehaviour {
             }
             if (isAttack && !isAttackCooldown) {
                 isAttackCooldown = true;
-                PlayerMovement.PlayerTakeDamage(5);
+                playerController.PlayerTakeDamage(5);
                 StartCoroutine(CooldownAttack());
             }
         } else {
