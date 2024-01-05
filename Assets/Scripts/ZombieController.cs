@@ -5,8 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class ZombieController : MonoBehaviour {
-    private static float hp = 100f;
-    public static float Hp {
+    [SerializeField] private float hp = 100f;
+    public float Hp {
         get { return hp; }
         set { hp = value; }
     }
@@ -14,10 +14,10 @@ public class ZombieController : MonoBehaviour {
     public float speed = 1f;
     private bool isAttack = false;
     private bool isAttackCooldown = false;
-    private static bool isDead = false;
+    [SerializeField] private bool isDead = false;
 
     private GameObject Player;
-    private static Animator Animator;
+    private  Animator Animator;
 
 
 
@@ -26,6 +26,7 @@ public class ZombieController : MonoBehaviour {
     {
         Player = GameObject.Find("Player");
         Animator = GetComponent<Animator>();
+        Debug.Log(Hp);
     }
 
     // Update is called once per frame
@@ -63,7 +64,7 @@ public class ZombieController : MonoBehaviour {
         isAttackCooldown = false;
     }
 
-    public static void ZombieTakeDamage(float damage) {
+    public void ZombieTakeDamage(float damage) {
         Hp -= damage;
 
         if(Hp <= 0) {
