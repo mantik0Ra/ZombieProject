@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -113,6 +114,17 @@ public class PlayerMovement : MonoBehaviour
         if(zombie.IsDead) {
             gameController.Coins++;
             Debug.Log(gameController.Coins);
+        }
+    }
+
+    private void OnGUI() {
+        if(isDead) {
+            GUI.Box(new Rect(Screen.width / 2 - 150, Screen.height / 2 - 150, 300, 300), "YOU ARE DEAD");
+            GUI.Box(new Rect(Screen.width / 2 - 75, Screen.height / 2 - 110, 150, 50), $"Total coins amount: {gameController.Coins}");
+            if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 - 50, 150, 100), "Do you wanna again?")) {
+                SceneManager.LoadScene(0);
+            }
+            
         }
     }
 }
