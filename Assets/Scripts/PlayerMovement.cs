@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     AudioSource audioPlayer;
     GameObject Drum;
-    ZombieController zombieController;
+    GameController gameController;
 
     private static float hp = 100f;
     public static float Hp {
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         particleSystem = GameObject.Find("WFX_Explosion Small").GetComponent<ParticleSystem>();
         audioPlayer = Camera.GetComponent<AudioSource>();
         Drum = GameObject.Find("pistol_drum_001");
-        zombieController = new ZombieController();
+        gameController = new GameController();
     }
 
     // Update is called once per frame
@@ -67,7 +67,9 @@ public class PlayerMovement : MonoBehaviour
         Physics.Raycast(Camera.transform.position, Camera.transform.TransformDirection(Vector3.forward), out hit, 100f);
 
         if (hit.collider is not null && hit.collider.tag == "Zombie") {
-            hit.collider.GetComponent<ZombieController>().ZombieTakeDamage(25f);
+            ZombieController zombieController = hit.collider.GetComponent<ZombieController>();
+            zombieController.ZombieTakeDamage(25f);
+            CoinsCounter(zombieController);
         }
     }
 
@@ -94,5 +96,12 @@ public class PlayerMovement : MonoBehaviour
     public static void PlayerTakeDamage(int valueDamage) {
         Hp -= valueDamage;
         HealthBar.ReduceHpInHealthBar(valueDamage);
+    }
+
+    private void CoinsCounter(ZombieController zombie) {
+        if(zombie.IsDead) {
+            gameController.Coins++;
+            Debug.Log(gameController.Coins);
+        }
     }
 }

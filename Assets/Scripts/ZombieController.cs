@@ -16,8 +16,11 @@ public class ZombieController : MonoBehaviour {
     private bool isAttackCooldown = false;
     [SerializeField] private bool isDead = false;
 
+    public bool IsDead { get { return isDead; } }
+
     private GameObject Player;
     private  Animator Animator;
+    private GameController gameController;
 
 
 
@@ -26,7 +29,7 @@ public class ZombieController : MonoBehaviour {
     {
         Player = GameObject.Find("Player");
         Animator = GetComponent<Animator>();
-        Debug.Log(Hp);
+        
     }
 
     // Update is called once per frame
