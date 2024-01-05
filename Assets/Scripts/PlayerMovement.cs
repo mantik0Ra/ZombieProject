@@ -8,20 +8,20 @@ public class PlayerMovement : MonoBehaviour
 {
     public float sensivity = 50f;
     private GameObject Camera;
-    Vector3 currentEulerAngles;
+    private Vector3 currentEulerAngles;
 
-    ParticleSystem particleSystem;
+    private ParticleSystem particleSystem;
 
-    bool isShoot = false;
-    bool isCooldown = false;
-    bool isDead = false;
+    private bool isShoot = false;
+    private bool isCooldown = false;
+    private bool isDead = false;
 
-    float horizontalInput;
-    float verticalInput;
+    private float horizontalInput;
+    private float verticalInput;
 
-    AudioSource audioPlayer;
-    GameObject Drum;
-    GameController gameController;
+    private AudioSource audioPlayer;
+    private GameObject Drum;
+    private GameController gameController;
 
     private static float hp = 100f;
     public static float Hp {
