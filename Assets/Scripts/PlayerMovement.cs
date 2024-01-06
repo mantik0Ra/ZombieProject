@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!isDead) {
+        if(!isDead && Time.timeScale != 0) {
             CameraMovement();
             PressButtonToShot();
         }
