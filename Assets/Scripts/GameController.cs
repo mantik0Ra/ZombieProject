@@ -12,10 +12,13 @@ public class GameController : MonoBehaviour
         set { coins = value; }
     }
 
+    GameObject gameUI;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameUI = GameObject.Find("GameUI");
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
