@@ -26,7 +26,7 @@ public class SpawnManager : MonoBehaviour
     }
 
     private IEnumerator waitForSpawn(float x, float y) {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         Instantiate(zombieObject, new Vector3(x, 0, y), new Quaternion(0f, 0f, 0f, 0f));
         isSpawn = false;
     }
