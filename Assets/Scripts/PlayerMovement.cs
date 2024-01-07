@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
         particleSystem = GameObject.Find("WFX_Explosion Small").GetComponent<ParticleSystem>();
         audioPlayer = Camera.GetComponent<AudioSource>();
         Drum = GameObject.Find("pistol_drum_001");
-        gameController = new GameController();
+        gameController = GameObject.Find("GameManager").GetComponent<GameController>();
     }
 
     // Update is called once per frame
