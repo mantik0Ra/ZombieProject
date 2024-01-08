@@ -30,16 +30,15 @@ public class GameController : MonoBehaviour
     void Start()
     {
         if(restartBtnClicked) {
-            gameUI.SetActive(true);
             menuUI.SetActive(false);
-            restartBtnClicked = false;
             Time.timeScale = 1;
+            gameUI.SetActive(true);
+            
         }
         else {
             gameUI.SetActive(false);
             deadUI.SetActive(false);
         }
-        
         
     }
 
@@ -62,12 +61,14 @@ public class GameController : MonoBehaviour
     }
 
     public void RestartBtnClicked() {
-        GameRestart();
         restartBtnClicked = true;
+        GameRestart();
+
     }
 
     public void PlayerIsDead() {
         menuUI.SetActive(true);
+        gameUI.SetActive(false);
         mainUI.SetActive(false);
         deadUI.SetActive(true);
     }

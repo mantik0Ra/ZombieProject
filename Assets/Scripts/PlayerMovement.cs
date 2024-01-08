@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject Drum;
     private GameController gameController;
 
-    private static float hp = 5f;
+    private static float hp = 100f;
     public static float Hp {
         get { return hp; }
         set { hp = value; }
