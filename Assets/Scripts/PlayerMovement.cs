@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject Drum;
     private GameController gameController;
 
-    private static float hp = 100f;
+    private static float hp = 5f;
     public static float Hp {
         get { return hp; }
         set { hp = value; }
@@ -99,32 +99,22 @@ public class PlayerMovement : MonoBehaviour
     public void PlayerTakeDamage(int valueDamage) {
         Hp -= valueDamage;
         HealthBar.ReduceHpInHealthBar(valueDamage);
-        if(!IsAlive()) {
-            isDead = true;
-            Time.timeScale = 0;
-        }
+        IsAlive();
     }
 
-    private bool IsAlive() {
-        if (Hp <= 0) return false;
-        return true;
+    private void IsAlive() {
+        if (Hp <= 0) {
+            isDead = true;
+            Time.timeScale = 0;
+            gameController.PlayerIsDead();
+        }
+
     }
 
     private void CoinsCounter(ZombieController zombie) {
         if(zombie.IsDead) {
             gameController.Coins++;
             Debug.Log(gameController.Coins);
-        }
-    }
-
-    private void OnGUI() {
-        if(isDead) {
-            GUI.Box(new Rect(Screen.width / 2 - 150, Screen.height / 2 - 150, 300, 300), "YOU ARE DEAD");
-            GUI.Box(new Rect(Screen.width / 2 - 75, Screen.height / 2 - 110, 150, 50), $"Total coins amount: {gameController.Coins}");
-            if (GUI.Button(new Rect(Screen.width / 2 - 75, Screen.height / 2 - 50, 150, 100), "Do you wanna again?")) {
-                gameController.GameRestart();
-            }
-            
         }
     }
 

@@ -13,17 +13,33 @@ public class GameController : MonoBehaviour
 
     GameObject gameUI;
     GameObject menuUI;
+    GameObject deadUI;
+    GameObject mainUI;
+
+    public static bool restartBtnClicked = false;
 
     // Start is called before the first frame update
 
     private void Awake() {
         gameUI = GameObject.Find("GameUI");
         menuUI = GameObject.Find("MenuUI");
+        mainUI = GameObject.Find("MainUI");
+        deadUI = GameObject.Find("DeadUI");
         Time.timeScale = 0;
     }
     void Start()
     {
-        gameUI.SetActive(false);
+        if(restartBtnClicked) {
+            gameUI.SetActive(true);
+            menuUI.SetActive(false);
+            restartBtnClicked = false;
+            Time.timeScale = 1;
+        }
+        else {
+            gameUI.SetActive(false);
+            deadUI.SetActive(false);
+        }
+        
         
     }
 
@@ -43,5 +59,16 @@ public class GameController : MonoBehaviour
         gameUI.SetActive(true);
         menuUI.SetActive(false);
         
+    }
+
+    public void RestartBtnClicked() {
+        GameRestart();
+        restartBtnClicked = true;
+    }
+
+    public void PlayerIsDead() {
+        menuUI.SetActive(true);
+        mainUI.SetActive(false);
+        deadUI.SetActive(true);
     }
 }
